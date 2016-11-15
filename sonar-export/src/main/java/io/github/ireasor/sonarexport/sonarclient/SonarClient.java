@@ -1,6 +1,5 @@
 package io.github.ireasor.sonarexport.sonarclient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +8,6 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -42,7 +40,7 @@ public class SonarClient {
 		initializeHttp(address, username, password);
 	}
 
-	public List<Issue> executeSearch(String project) throws ClientProtocolException, IOException {
+	public List<Issue> executeSearch(String project) throws Exception {
 		CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
 
 		try {
@@ -89,7 +87,7 @@ public class SonarClient {
 		credentialsProvider.setCredentials(new AuthScope(target.getHostName(), target.getPort()), new UsernamePasswordCredentials(username, password));
 	}
 
-	private Results searchPage(CloseableHttpClient httpClient, String project, int pageNumber) throws ClientProtocolException, IOException {
+	private Results searchPage(CloseableHttpClient httpClient, String project, int pageNumber) throws Exception {
 		HttpGet httpget = new HttpGet("http://" + host + ":" + port + "/api/issues/search?projectKeys=" + project + "&p=" + pageNumber);
 		System.out.println("Executing request " + httpget.getRequestLine() + " to target " + target);
 
@@ -98,8 +96,7 @@ public class SonarClient {
 			System.out.println("----------------------------------------");
 			System.out.println(response.getStatusLine());
 
-			Results results = gson.fromJson(EntityUtils.toString(response.getEntity()), Results.class);
-			return results;
+			return gson.fromJson(EntityUtils.toString(response.getEntity()), Results.class);
 		} finally {
 			response.close();
 		}
