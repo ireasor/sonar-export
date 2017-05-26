@@ -1,6 +1,6 @@
 package io.github.ireasor.sonarexport.entity;
 
-public class Results {
+public class SearchResults {
 	
 	private int total;
 	private int p;

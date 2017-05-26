@@ -9,13 +9,13 @@ Build it using:
 
 Run it using:
 
-``java -jar target/sonar-export-1.0-jar-with-dependencies.jar SERVER:PORT PROJECTID1,PROJECTID2 USERNAME:PASSWORD``
+``java -jar target/sonar-export-1.0-jar-with-dependencies.jar SERVER:PORT PROJECTID1,PROJECTID2 USERNAME:PASSWORD [-includeCoverage]``
 
 For example:
 
-``java -jar target/sonar-export-1.0-jar-with-dependencies.jar localhost:9000 Customer-ProjectA,Customer-ProjectB admin:admin``
+``java -jar target/sonar-export-1.0-jar-with-dependencies.jar localhost:9000 Customer-ProjectA,Customer-ProjectB admin:admin -includeCoverage``
 
-The file will be output to the current directory as a file named results.xls.
+-includeCoverage is an optional parameter that will include a coverage report.  The file will be output to the current directory as a file named results.xls.
 
 ## Caveats and limitations:
 
