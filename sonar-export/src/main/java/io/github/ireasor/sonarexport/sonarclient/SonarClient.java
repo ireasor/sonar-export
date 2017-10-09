@@ -36,7 +36,7 @@ public class SonarClient {
 			boolean hasMorePages = true;
 			
 			while (hasMorePages) {
-				String requestPath = "/api/issues/search?projectKeys=" + project + "&p=" + pageNumber;
+				String requestPath = "/api/issues/search?projectKeys=" + project + "&resolved=false" + "&p=" + pageNumber;
 				SearchResults results = searchExec.getResults(requestPath);
 				issuesList.addAll(Arrays.asList(results.getIssues()));
 				
