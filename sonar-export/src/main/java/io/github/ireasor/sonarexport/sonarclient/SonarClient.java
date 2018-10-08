@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -27,7 +26,7 @@ public class SonarClient {
 	}
 
 	public List<Issue> executeSearch(String project) throws Exception {
-		CloseableHttpClient httpClient = httpClientProvider.createHttpClient();
+		httpClientProvider.createClient();
 		
 		try {
 			List<Issue> issuesList = new ArrayList<Issue>();
@@ -50,12 +49,12 @@ public class SonarClient {
 			return issuesList;
 
 		} finally {
-			httpClient.close();
+		    httpClientProvider.closeClient();
 		}
 	}
 	
 	public List<Component> getCoverage(String project) throws Exception {
-		CloseableHttpClient httpClient = httpClientProvider.createHttpClient();
+		httpClientProvider.createClient();
 
 		try {			
 			List<Component> componentsList = new ArrayList<Component>();
@@ -79,7 +78,7 @@ public class SonarClient {
 			return componentsList;
 
 		} finally {
-			httpClient.close();
+		    httpClientProvider.closeClient();
 		}
 	}
 }

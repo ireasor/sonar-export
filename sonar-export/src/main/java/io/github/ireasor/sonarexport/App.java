@@ -15,9 +15,21 @@ public class App
     {
     	if (args.length < 3) {
     		System.out.println("Syntax: java -jar sonar-export.jar <SERVER ADDRESS> <PROJECTS> <LOGIN INFO> [-includeCoverage]");
-    		System.out.println("For example: java -jar sonar-export.jar localhost:8080 myFirstProject,mySecondProject admin:admin -includeCoverage");
+    		System.out.println("For example: java -jar sonar-export.jar http://localhost:8080 myFirstProject,mySecondProject admin:admin -includeCoverage");
     	} else {
     		String serverAddress = args[0];
+    		String[] addressParts = serverAddress.split("://");
+    		String protocol = "";
+    		String hostname = "";
+    		
+    		if (addressParts.length == 2) {
+    		    protocol = addressParts[0];
+            hostname = addressParts[1];
+    		} else {
+    		    System.out.println("Please specify a hostname with the protocol included.");
+    		    System.out.println("For example: java -jar sonar-export.jar http://localhost:8080 myFirstProject,mySecondProject admin:admin -includeCoverage");
+    		    return;
+    		}
         	
         	String projectsList = args[1];
         	String[] projects = projectsList.split(",");
@@ -38,7 +50,7 @@ public class App
         	ExcelBuilder builder = new ExcelBuilder();
         	
     		try {
-    			HttpClientProvider httpClientProvider = new HttpClientProvider(serverAddress, username, password);
+    			HttpClientProvider httpClientProvider = new HttpClientProvider(protocol, hostname, username, password);
     			SonarClient client = new SonarClient(httpClientProvider);
     			
     			for (String project:projects) {
