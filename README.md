@@ -4,18 +4,19 @@ The SonarQube exporter is a self-contained JAR file that can be run from the com
 
 Build it using:
 
-``mvn clean compile assembly:single``
+``mvn clean install``
 
+To run it, cd into the target directory from your Maven build and run:
 
-Run it using:
-
-``java -jar target/sonar-export-1.0-jar-with-dependencies.jar SERVER:PORT PROJECTID1,PROJECTID2 USERNAME:PASSWORD [-includeCoverage]``
+``java -jar sonar-export-1.0.1.jar SERVER:PORT PROJECTID1,PROJECTID2 USERNAME:PASSWORD [-includeCoverage]``
 
 For example:
 
-``java -jar target/sonar-export-1.0-jar-with-dependencies.jar localhost:9000 Customer-ProjectA,Customer-ProjectB admin:admin -includeCoverage``
+``java -jar sonar-export-1.0.1.jar localhost:9000 Customer-ProjectA,Customer-ProjectB admin:admin -includeCoverage``
 
 -includeCoverage is an optional parameter that will include a coverage report.  The file will be output to the current directory as a file named results.xls.
+
+If you would like to distribute the binary to somebody or move it from the Maven target directory, you will need to include the /lib directory from the target directory as well.  When running the jar, it expects the lib directory to be in the same location.
 
 ## Caveats and limitations:
 
